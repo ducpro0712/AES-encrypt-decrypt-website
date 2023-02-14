@@ -66,7 +66,10 @@ with col2:
     text_bytes = bytes.fromhex(encoded_text)
     
     if st.button('Decrypt'):
-        pt = decrypt(text_bytes)
-        st.text_area('The plain text', pt)
+        try:
+            pt = decrypt(text_bytes)
+            st.text_area('The plain text', pt)
+        except UnicodeDecodeError as e:
+            st.error('There was an error because the password or the input has been changed')
 
         
