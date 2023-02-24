@@ -127,8 +127,8 @@ else:
     non = f'Nonce:\n{binascii.hexlify(ciphertext[2])}'
     contents = f'{hex_form}\n\n{auth_msg}\n\n{non}'
 
-    if st.download_button(label = 'Download to claim data', data = contents, file_name= 'data.txt'):
-        st.write('click decrypt button to check the decryption')
+    if st.download_button(label = 'Download to claim encrypted information', data = contents, file_name= 'data.txt'):
+    st.write('click decrypt button to check the decryption')
     click = st.button("Decrypt")
     if click:
 
