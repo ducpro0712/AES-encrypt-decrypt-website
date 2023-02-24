@@ -1,7 +1,7 @@
 import streamlit as st
 from Crypto.Cipher import AES
 from Crypto.Hash import SHA256
-
+st.set_page_config(layout="wide", initial_sidebar_state="expanded")
 col1, col2 = st.columns(2, gap = 'large')
 
 #  ENCODE
@@ -9,13 +9,11 @@ with col1:
     
     st.header('Online Encryption')
     st.subheader('AES mode: ECB')
-    password =  st.text_input("Enter password", key = 1)
+    password =  st.text_input(label = "Enter password", key = 1, type = 'password')
     
     #  bien password thanh 256 bits
     hash_obj = SHA256.new(password.encode('utf-8'))
     hkey = hash_obj.digest()
-    if password:
-        st.write('Password in 256 bits after encoded: ', hkey)
     
     # ham encrypt
     def encrypt(info):
@@ -28,33 +26,27 @@ with col1:
         return result
 
     msg = st.text_input('Enter text to be encrypted', key =3)
-    
     if st.button("Encrypt"):
-        cipher_text = encrypt(msg)
-        st.text_area('The bytes form of encoded text', cipher_text)
-        
-        hex_version = cipher_text.hex()
-        st.text_area('The hex form of encoded text', hex_version)
-        
-        #print(cipher_text)
 
+        cipher_text = encrypt(msg)
+        hex_version = f'- The hex form of encoded text:\n{cipher_text.hex()}'
+        bform = f'- The bytes form of encoded text:\n{cipher_text}'
+        pw = f'- Password is:\n{password}\n\n- The 256-bits form is:\n{hkey}'
+
+        contents = f'{hex_version}\n\n{bform}\n\n{pw}'
+        st.write("Text has been encrypted, click download button to save")
+        tai = st.download_button(label = 'Download to file', data= contents, file_name= 'encrypted_text.txt')
+        
+    
 #  DECODE
 with col2:
     
     st.header('Online Decryption')
     st.subheader('AES mode: ECB')
-    password =  st.text_input("Enter password", key = 2)
-    
-    #  bien password thanh 256 bits
-    hash_obj = SHA256.new(password.encode('utf-8'))
-    hkey = hash_obj.digest()
-    if password:
-        st.write('Password in 256 bits after encoded: ', hkey)
+    choice = st.selectbox(label = 'Choose mode to decrypt', options= ('Decrypted file', 'Directly tackling'))
         
-
     def decrypt(info):
         message = info
-       
         pad = "{"
         decipher = AES.new(hkey, AES.MODE_ECB)
         plaintext = decipher.decrypt(message).decode('utf-8')
@@ -62,11 +54,36 @@ with col2:
         result = plaintext[:pad_index]
         return result
     
-    encoded_text = st.text_input('Enter text in hex format to be decrypted', key = 4)
-    text_bytes = bytes.fromhex(encoded_text)
-    
-    if st.button('Decrypt'):
-        pt = decrypt(text_bytes)
-        st.text_area('The plain text', pt)
+    try:
+        if choice == 'Decrypted file':
+            # Upload file
+            file = st.file_uploader("Upload file")
+            if file is not None:
+            # Read lines from file
+                lines = file.readlines()
+                
+                password = lines[7].decode().strip('\n')
+                hash_obj = SHA256.new(password.encode('utf-8'))
+                hkey = hash_obj.digest()
+                
+                encrypted_text = lines[1].decode().strip('\n')
+                text_bytes = bytes.fromhex(encrypted_text)
+                
+                pt = decrypt(text_bytes)
+                st.text_area('The plain text', pt)
+
+        else:
+            password =  st.text_input("Enter password", key = 2, type = 'password')
+            hash_obj = SHA256.new(password.encode('utf-8'))
+            hkey = hash_obj.digest()
+            
+            encoded_text = st.text_input('Enter text in hex format to be decrypted', key = 4)
+            text_bytes = bytes.fromhex(encoded_text)
+            
+            pt = decrypt(text_bytes)
+            st.text_area('The plain text', pt)
+
+    except UnicodeDecodeError as e:
+            st.error('There was an error because the password or the input has been changed')
 
         
