@@ -128,9 +128,9 @@ else:
     contents = f'{hex_form}\n\n{auth_msg}\n\n{non}'
 
     st.download_button(label = 'Download to claim encrypted information', data = contents, file_name= 'data.txt')
-    st.write('click decrypt button to check the decryption')
+    st.markdown('click decrypt button to check the decryption')
     click = st.button("Decrypt")
     if click:
 
         decrypted = decrypt(ciphertext, key, AES.MODE_GCM)
-        st.text_area("Decrypted after encrypted: ", decrypted.decode())
+        st.text_area("Decrypted after encrypting: ", decrypted.decode())
