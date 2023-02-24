@@ -80,7 +80,8 @@ with col2:
             pt = decrypt(text_bytes)
             st.text_area('The plain text', pt)
 
-    except UnicodeDecodeError as e:
-            st.error('There was an error because the password or the input has been changed')
+    except UnicodeDecodeError as e1:
+        st.error('There was an error because the password or the input has been changed')
 
-        
+    except ValueError as e2:
+        st.error('There was an error because the password or the input has been changed')
