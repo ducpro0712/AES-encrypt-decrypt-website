@@ -2,6 +2,7 @@ import streamlit as st
 from Crypto.Cipher import AES
 from Crypto.Hash import SHA256
 
+
 st.set_page_config(layout="wide", initial_sidebar_state="expanded")
 
 
