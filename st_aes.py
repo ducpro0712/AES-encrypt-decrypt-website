@@ -47,7 +47,7 @@ if mode_choosing == 'ECB':
         
         st.header('Online Decryption')
         st.subheader('AES mode: ECB')
-        choice = st.selectbox(label = 'Choose mode to decrypt', options= ('Decrypted file', 'Directly tackling'))
+        choice = st.selectbox(label = 'Choose mode to decrypt', options= ('Decrypt file', 'Directly tackling'))
             
         def decrypt(info):
             message = info
@@ -59,7 +59,7 @@ if mode_choosing == 'ECB':
             return result
         
         try:
-            if choice == 'Decrypted file':
+            if choice == 'Decrypt file':
                 # Upload file
                 file = st.file_uploader("Upload file")
                 if file is not None:
