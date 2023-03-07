@@ -39,7 +39,7 @@ with col1:
 
         contents = f'{hex_version}\n\n{bform}\n\n{pw}'
         st.write("Text has been encrypted, click download button to save")
-        tai = st.download_button(label = 'Download to file', data= contents, file_name= 'encrypted_text.txt')
+        tai = st.download_button(label = 'Download to file', data= contents, file_name= 'encrypted_text.txt') #mime('application/octet-stream')
         
     
 #  DECODE
@@ -49,7 +49,7 @@ with col2:
     st.subheader('AES mode: ECB')
     
         
-    def decrypt(info):
+    def decrypt(info,hkey):
         message = info
         pad = "{"
         decipher = AES.new(hkey, AES.MODE_ECB)
@@ -73,7 +73,7 @@ with col2:
             
             encrypted_text = lines[1].decode().strip('\n')
             text_bytes = bytes.fromhex(encrypted_text)
-            pt = decrypt(text_bytes)
+            pt = decrypt(text_bytes, hkey)
             st.text_area('The plain text', pt)
 
         
