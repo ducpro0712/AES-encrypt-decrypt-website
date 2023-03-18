@@ -61,7 +61,7 @@ with encryption:
     st.header("Encryption")
     password = st.text_input("Enter password", type="password", key=1)
     plaintext = st.text_area("Enter text to be encrypted")
-    if password:
+    if password and plaintext:
         if st.button("Encrypt"):
             ciphertext = encrypt_text(password, plaintext)
             st.success("Text has been encrypted. Click 'Download' to save the encrypted text to a file.")
@@ -71,7 +71,8 @@ with encryption:
             pw = f'- Password is:\n{password}'
             contents = f'{hex_version}\n\n{bform}\n\n{pw}'
             st.download_button(label="Download", data=contents, file_name="encrypted_text.txt")
-
+    else:
+        st.warning("Please enter a password and text to be encrypted.")
 
 # Set up decryption section with file uploader
 with decryption:
@@ -87,8 +88,7 @@ with decryption:
             plaintext = decrypt_text(password, text_bytes)
             st.success("Text has been decrypted.")
             st.text_area("Decrypted text", value=plaintext)
-        except UnicodeDecodeError as e1:
-            st.error('There was an error because the password or the input has been changed')
+        except Exception as e:
+            st.error('There were some errors during the decryption. Please check the information again')
 
-        except ValueError as e2:
-            st.error('There was an error because the password or the input has been changed')
+        
