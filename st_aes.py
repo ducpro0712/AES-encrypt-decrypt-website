@@ -61,15 +61,16 @@ with encryption:
     st.header("Encryption")
     password = st.text_input("Enter password", type="password", key=1)
     plaintext = st.text_area("Enter text to be encrypted")
-    if st.button("Encrypt"):
-        ciphertext = encrypt_text(password, plaintext)
-        st.success("Text has been encrypted. Click 'Download' to save the encrypted text to a file.")
-        
-        hex_version = f'- The hex form of encoded text:\n{ciphertext.hex()}'
-        bform = f'- The bytes form of encoded text:\n{ciphertext}'
-        pw = f'- Password is:\n{password}'
-        contents = f'{hex_version}\n\n{bform}\n\n{pw}'
-        st.download_button(label="Download", data=contents, file_name="encrypted_text.txt")
+    if password:
+        if st.button("Encrypt"):
+            ciphertext = encrypt_text(password, plaintext)
+            st.success("Text has been encrypted. Click 'Download' to save the encrypted text to a file.")
+            
+            hex_version = f'- The hex form of encoded text:\n{ciphertext.hex()}'
+            bform = f'- The bytes form of encoded text:\n{ciphertext}'
+            pw = f'- Password is:\n{password}'
+            contents = f'{hex_version}\n\n{bform}\n\n{pw}'
+            st.download_button(label="Download", data=contents, file_name="encrypted_text.txt")
 
 
 # Set up decryption section with file uploader
