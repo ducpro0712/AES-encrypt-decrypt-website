@@ -90,7 +90,7 @@ with encryption:
 with decryption:
     st.header("Decryption")
     password = st.text_input("Enter password", type="password", key ='2')
-    file = st.file_uploader("Upload encrypted text file")
+    file = st.file_uploader("Upload encrypted text file", type = 'txt')
     if file is not None:
         try:
             ####start_time = time.perf_counter()
