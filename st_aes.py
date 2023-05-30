@@ -66,7 +66,7 @@ with encryption:
             try:
                 #start_time = time.perf_counter()
                 ciphertext = encrypt_text(password, plaintext)
-                print(ciphertext)
+                
             #     end_time = time.perf_counter()
 
             # # Calculate the running time in milliseconds
@@ -78,8 +78,7 @@ with encryption:
                 hex_version = f'- The hex form of encoded text:\n{ciphertext[16:].hex()}'
                 iv = f'The iv is:\n{ciphertext[:16]}'
                 bform = f'- The bytes form of encoded text:\n{ciphertext[16:]}'
-                pw = f'- Password is:\n{password}'
-                contents = f'{hex_version}\n\n{iv}\n\n{bform}\n\n{pw}'
+                contents = f'{hex_version}\n\n{iv}\n\n{bform}'
                 st.download_button(label="Download", data=contents, file_name="encrypted_text.txt")
             except Exception as e1:
                 st.error('There were some errors during the encryption. Please check the information again')
