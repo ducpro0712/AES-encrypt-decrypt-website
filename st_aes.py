@@ -8,8 +8,8 @@ import time
 
 # Set page configuration
 
-img_path = "assets/lock2.png"
-icon_path = "assets/lock_icon.png"
+img_path = "assets/truong.png"
+icon_path = "assets/truong.png"
 
 st.set_page_config(page_title="AES Encryption/Decryption", page_icon= icon_path, layout="wide", initial_sidebar_state="expanded")
 lock_image = Image.open(img_path)
